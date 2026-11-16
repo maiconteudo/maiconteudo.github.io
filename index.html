@@ -137,61 +137,19 @@ body.dentro .subir{animation:sobe .6s ease-out forwards;animation-delay:var(--d)
 .selo svg{width:30px;height:30px;display:block}
 .tiktok .selo{background:#05050A;box-shadow:0 0 0 1px #FFFFFF22 inset,0 6px 16px -6px #FF3D9A}
 .youtube .selo{background:#FFFFFF;box-shadow:0 0 0 1px #FFFFFF55 inset,0 6px 16px -6px #FF2D2D}
-#album{
-  position:fixed;left:12px;top:max(12px,env(safe-area-inset-top));z-index:6;
-  min-height:36px;padding:7px 13px;border:0;border-radius:999px;background:#0E0719D9;cursor:pointer;
-  box-shadow:0 0 0 1px #FFFFFF22 inset,0 6px 18px -8px #000;
-  font:700 14px/1.2 var(--texto);color:var(--nevoa);
-  opacity:0;visibility:hidden;transition:opacity .5s,transform .3s;
+#segredos{
+  position:fixed;left:50%;top:max(10px,env(safe-area-inset-top));z-index:5;transform:translateX(-50%);
+  display:flex;gap:6px;padding:6px 12px;border-radius:999px;background:#0E0719B3;
+  box-shadow:0 0 0 1px #FFFFFF1C inset;
+  opacity:0;visibility:hidden;transition:opacity .5s;pointer-events:none;
 }
-body.dentro #album{opacity:1;visibility:visible}
-#album b{color:var(--luz)}
-#album.pulo{transform:scale(1.15)}
-.vidro{
-  position:fixed;inset:0;z-index:8;display:grid;place-items:center;padding:20px;
-  background:#05020CB3;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
-  -webkit-user-select:text;user-select:text;
-}
-.vidro[hidden]{display:none}
-.cartao{
-  --a:#3DF0FF;--b:#FF3D9A;
-  position:relative;isolation:isolate;overflow:hidden;
-  width:min(88vw,370px);padding:22px 20px 18px;border-radius:26px;text-align:center;
-  box-shadow:0 24px 60px -20px var(--b);
-  animation:surge .55s cubic-bezier(.2,1.5,.4,1);
-}
-.cartao::before{content:"";position:absolute;inset:-80%;z-index:-2;background:conic-gradient(from 0deg,var(--a),var(--b),#FFFFFF,var(--a));animation:gira 3s linear infinite}
-.cartao::after{content:"";position:absolute;inset:2px;z-index:-1;border-radius:24px;background:linear-gradient(180deg,#1E1236 0%,#0E0719 100%)}
-@keyframes surge{from{opacity:0;transform:scale(.6) rotate(-6deg)}to{opacity:1;transform:none}}
-.cartao.comum{--a:#7B6CFF;--b:#3DF0FF}
-.cartao.raro{--a:#3DF0FF;--b:#FF3D9A}
-.cartao.lendario{--a:#FFD23D;--b:#FF8A00}
-.selo-raridade{display:inline-block;padding:5px 12px;border-radius:999px;font:800 13px/1 var(--texto);letter-spacing:.08em;color:#12081F;background:linear-gradient(90deg,var(--a),var(--b))}
-.cartao h3{margin:14px 0 6px;font-family:var(--titulo);font-weight:800;font-size:20px;letter-spacing:.06em;color:var(--nevoa);text-transform:uppercase}
-.recado{margin:0;font:800 23px/1.25 var(--texto);color:var(--tinta);text-wrap:balance}
-.cartao .conta{margin:14px 0 0;font-size:14px;color:var(--nevoa)}
-.cartao .cta{margin:12px 0 0;font-size:16px;color:var(--luz)}
-.botoes{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px}
-.bt{min-height:46px;padding:11px 18px;border:0;border-radius:999px;font:700 16px/1.1 var(--texto);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
-.bt-luz{background:linear-gradient(90deg,var(--a),var(--b));color:#12081F}
-.bt[hidden],.cta[hidden]{display:none}
-.bt-sombra{background:#FFFFFF14;color:var(--tinta);box-shadow:0 0 0 1px #FFFFFF2A inset}
-.caras{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
-.cara{padding:10px 6px;border-radius:16px;background:#FFFFFF0D;box-shadow:0 0 0 1px #FFFFFF1A inset}
-.cara span{display:block;font-size:28px;line-height:1.1}
-.cara small{display:block;margin-top:4px;font-size:12px;line-height:1.25;color:var(--nevoa)}
-.cara.nao span{filter:grayscale(1) brightness(.5)}
-#oraculo{
-  --a:#FFD23D;--b:#B03DFF;
-  position:relative;isolation:isolate;overflow:hidden;width:100%;max-width:420px;min-height:60px;
-  border:0;border-radius:22px;cursor:pointer;color:var(--tinta);
-  font:800 18px/1.2 var(--texto);padding:14px 18px;
-  box-shadow:0 18px 34px -16px var(--b);transition:transform .12s;
-}
-#oraculo::before{content:"";position:absolute;inset:-80%;z-index:-2;background:conic-gradient(from 0deg,var(--a),var(--b),#3DF0FF,var(--a));animation:gira 2.6s linear infinite}
-#oraculo::after{content:"";position:absolute;inset:2px;z-index:-1;border-radius:20px;background:radial-gradient(120% 140% at 50% 0%,#3A1F5E 0%,#140A24 70%)}
-#oraculo:active{transform:scale(.97)}
-#oraculo small{display:block;margin-top:3px;font:600 13px var(--texto);color:var(--nevoa)}
+body.dentro #segredos{opacity:1;visibility:visible}
+#segredos span{font-size:17px;line-height:1;filter:grayscale(1) brightness(.45);transition:filter .3s}
+#segredos span.on{filter:none;animation:acende .5s cubic-bezier(.2,1.8,.4,1)}
+@keyframes acende{0%{transform:scale(.3)}100%{transform:none}}
+#segredos.zerou{background:linear-gradient(90deg,#FFD23D,#FF3D9A,#3DF0FF)}
+.tiktok.chama{animation:chama .6s ease-in-out 4}
+@keyframes chama{50%{transform:scale(1.05) rotate(-1.5deg)}}
 .rotulo{flex:1;min-width:0}
 .nome{display:block;font-family:var(--titulo);font-weight:800;font-size:33px;line-height:1}
 .arroba{display:block;margin-top:3px;font-size:15px;color:var(--nevoa)}
@@ -228,29 +186,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--ciano);outline-offs
 </section>
 <button id="pular" type="button">pular ›</button>
 <div id="flash" aria-hidden="true"></div>
-<button id="album" type="button" aria-haspopup="dialog"></button>
-<div class="vidro" id="painel" role="dialog" aria-modal="true" aria-labelledby="tituloAlbum" hidden>
-  <div class="cartao raro">
-    <span class="selo-raridade">ÁLBUM</span>
-    <h3 id="tituloAlbum">caras do olho</h3>
-    <div class="caras" id="caras"></div>
-    <div class="botoes"><button class="bt bt-luz" type="button" id="fecharAlbum">beleza</button></div>
-  </div>
-</div>
-<div class="vidro" id="carta" role="dialog" aria-modal="true" aria-labelledby="tituloCarta" hidden>
-  <div class="cartao" id="cartao">
-    <span class="selo-raridade" id="raridade"></span>
-    <h3 id="tituloCarta">o olho viu isso em você</h3>
-    <p class="recado" id="recado"></p>
-    <p class="conta" id="contaPrev"></p>
-    <p class="cta" id="ctaSegue" hidden>gostou? me segue que todo dia tem mais 😏</p>
-    <div class="botoes">
-      <button class="bt bt-luz" type="button" id="outra">🔮 tirar outra</button>
-      <a class="bt bt-sombra" id="btSegue" href="https://www.tiktok.com/@omaiconteudo" hidden>seguir</a>
-      <button class="bt bt-sombra" type="button" id="fecharCarta">fechar</button>
-    </div>
-  </div>
-</div>
+<div id="segredos" aria-live="polite"></div>
 
 <main class="cena" id="links">
   <div class="caixa-olho">
@@ -277,9 +213,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--ciano);outline-offs
     </a>
   </nav>
 
-  <button id="oraculo" class="subir" style="--d:1.35s" type="button">🔮 o que o olho vê em você hoje?<small>toque e descubra · tem previsão lendária 👑</small></button>
-
-  <footer class="subir" style="--d:1.5s">
+  <footer class="subir" style="--d:1.45s">
     <span>sonhe, planeje, conquiste</span>
     <button id="denovo" type="button">entrar no olho de novo</button>
   </footer>
@@ -540,7 +474,6 @@ var GEO = {"w": 900, "h": 614, "iris": [454.84507400755734, 325.45030119846376, 
     var r = REACOES[nome];
     o.reacao = { r: r, t0: agora };
     o.dormindo = false;
-    if (o === mini) registrarCara(nome === 'achou' ? 'fofo' : nome);
     if (r.som) r.som();
     if (balao) {
       balao.textContent = fala || r.fala;
@@ -666,7 +599,7 @@ var GEO = {"w": 900, "h": 614, "iris": [454.84507400755734, 325.45030119846376, 
   var fase = 'intro';
   var tunel = .45, tunelAlvo = .45, vel = .05, velAlvo = .05, giroT = 0, matiz = 290, ondaT = .6, ondaTAlvo = .6;
   var revBase = 0, revBaseAlvo = .05;
-  var rastro = [], faiscas = [], zoom = null;
+  var rastro = [], faiscas = [], segredos = [], zoom = null;
   function explodir(x, y, n, forca) {
     for (var i = 0; i < n; i++) {
       var a = Math.random() * 6.28, v = (.3 + Math.random()) * (forca || 260);
@@ -711,6 +644,31 @@ var GEO = {"w": 900, "h": 614, "iris": [454.84507400755734, 325.45030119846376, 
     }
   }
 
+  function olhinho(c, o, x, y, r, alfa, agora) {
+    var pis = o.piscaT > 0 ? 1 - Math.abs(1 - (agora - o.piscaT) / 90) : 0;
+    if (agora - o.piscaT > 180) { o.piscaT = 0; if (agora > o.proxPisca) { o.piscaT = agora; o.proxPisca = agora + 1800 + Math.random() * 4000; } }
+    var ab = Math.max(.08, 1 - Math.max(0, pis));
+    var ang = Math.atan2(py - y, px - x), d = Math.min(1, Math.hypot(px - x, py - y) / 160);
+    c.save();
+    c.globalAlpha = alfa;
+    c.beginPath();
+    c.moveTo(x - r, y);
+    c.quadraticCurveTo(x, y - r * 1.15 * ab, x + r, y);
+    c.quadraticCurveTo(x, y + r * 1.0 * ab, x - r, y);
+    c.closePath();
+    c.fillStyle = '#F3ECE6'; c.fill();
+    c.save(); c.clip();
+    var ix = x + Math.cos(ang) * r * .42 * d, iy = y + Math.sin(ang) * r * .22 * d;
+    var g = c.createRadialGradient(ix, iy, 0, ix, iy, r * .52);
+    g.addColorStop(0, '#C77A35'); g.addColorStop(.6, '#7A3F17'); g.addColorStop(1, '#2A1006');
+    c.fillStyle = g; c.beginPath(); c.arc(ix, iy, r * .52, 0, 6.29); c.fill();
+    c.fillStyle = '#050203'; c.beginPath(); c.arc(ix, iy, r * .24, 0, 6.29); c.fill();
+    c.fillStyle = '#FFFFFF'; c.beginPath(); c.arc(ix + r * .14, iy - r * .14, r * .09, 0, 6.29); c.fill();
+    c.restore();
+    c.lineWidth = Math.max(1.5, r * .12); c.strokeStyle = '#1A0A06'; c.stroke();
+    c.restore();
+  }
+
   function pintarFundo(t, dt, psico, agora, seguindo) {
     var s = t / 1000;
     tunel += (tunelAlvo - tunel) * Math.min(1, dt * 3);
@@ -751,6 +709,15 @@ var GEO = {"w": 900, "h": 614, "iris": [454.84507400755734, 325.45030119846376, 
     ctx.fillStyle = '#06020D'; ctx.fillRect(0, 0, tela.width, tela.height);
     ctx.imageSmoothingEnabled = true;
     if (revBase > .005) { ctx.globalAlpha = revBase; ctx.drawImage(cor, 0, 0, tela.width, tela.height); ctx.globalAlpha = 1; }
+    /* segredos escritos no escuro: só aparecem onde a luz passa */
+    if (fase === 'dentro' && segredos.length) {
+      cctx.setTransform(Q, 0, 0, Q, 0, 0);
+      cctx.globalCompositeOperation = 'source-over';
+      for (var sg = 0; sg < segredos.length; sg++) {
+        var se = segredos[sg]; if (se.achado) continue;
+        olhinho(cctx, se, se.x, se.y, se.r, 1, agora);
+      }
+    }
     cctx.setTransform(1, 0, 0, 1, 0, 0);
     cctx.globalCompositeOperation = 'destination-in';
     cctx.drawImage(masc, 0, 0);
@@ -763,6 +730,22 @@ var GEO = {"w": 900, "h": 614, "iris": [454.84507400755734, 325.45030119846376, 
       var zr = zoom.r;
       ctx.drawImage(zoom.c, zoom.px - (zoom.px - zr.left) * z, zoom.py - (zoom.py - zr.top) * z, zr.width * z, zr.height * z);
       if (pz >= 1) { zoom = null; terminarMergulho(); }
+    }
+    /* segredos já achados ficam brilhando */
+    if (fase === 'dentro') {
+      for (var sa = 0; sa < segredos.length; sa++) {
+        var sx2 = segredos[sa]; if (!sx2.achado) continue;
+        var nasc = Math.min(1, (agora - sx2.achadoT) / 450);
+        var esc = nasc < 1 ? 1 + Math.sin(nasc * Math.PI) * .6 : 1;
+        var by = Math.sin(t * .003 + sa * 1.7) * 3;
+        ctx.globalCompositeOperation = 'lighter';
+        var gl2 = ctx.createRadialGradient(sx2.x, sx2.y + by, 0, sx2.x, sx2.y + by, sx2.r * 2.4);
+        gl2.addColorStop(0, 'hsla(' + ((matiz + sa * 50) % 360) + ',100%,60%,.35)'); gl2.addColorStop(1, 'hsla(0,0%,0%,0)');
+        ctx.fillStyle = gl2; ctx.beginPath(); ctx.arc(sx2.x, sx2.y + by, sx2.r * 2.4, 0, 6.29); ctx.fill();
+        ctx.globalCompositeOperation = 'source-over';
+        olhinho(ctx, sx2, sx2.x, sx2.y + by, sx2.r * esc, 1, agora);
+        ctx.globalCompositeOperation = 'lighter';
+      }
     }
     /* toques de neon: rastro do dedo e faíscas */
     ctx.globalCompositeOperation = 'lighter';
@@ -914,10 +897,14 @@ var GEO = {"w": 900, "h": 614, "iris": [454.84507400755734, 325.45030119846376, 
       if (fase === 'dentro') {
         if (!mini.dormindo && !mini.reacao && agora - ultimoToque > 9000) {
           mini.dormindo = true;
-          registrarCara('sono');
           balaoMini.textContent = 'zzz... 💤';
           balaoMini.classList.remove('ver', 'sai'); void balaoMini.offsetWidth; balaoMini.classList.add('ver');
           clearTimeout(balaoMini._t);
+        }
+        if (seguindo) for (var k = 0; k < segredos.length; k++) {
+          var sg = segredos[k];
+          if (sg.achado) continue;
+          if (Math.hypot(px - sg.x, py - sg.y) < 48) { sg.acc += dt; if (sg.acc > .25) acharSegredo(sg, agora); }
         }
       }
       if (mini.dormindo) proxReacao = Math.max(proxReacao, agora + 1500);
@@ -937,7 +924,7 @@ var GEO = {"w": 900, "h": 614, "iris": [454.84507400755734, 325.45030119846376, 
     fase = 'intro'; tunelAlvo = .45; velAlvo = .05; ondaTAlvo = .6; revBaseAlvo = .05;
     var botao = document.getElementById('olho');
     botao.style.transition = 'none';
-    corpo.classList.remove('mergulho', 'dentro', 'zoom'); zoom = null; fecharTudo();
+    corpo.classList.remove('mergulho', 'dentro', 'zoom'); zoom = null; segredos = [];
     void botao.offsetWidth; botao.style.transition = '';
     zerar(grande); grande.ativo = false; mini.ativo = false; grande.proxSalto = 0; proxReacao = 0;
     dica.classList.remove('ver');
@@ -989,129 +976,62 @@ var GEO = {"w": 900, "h": 614, "iris": [454.84507400755734, 325.45030119846376, 
     mostrarDentro();
   }
 
-  /* ================= Álbum: caras do olho pra descobrir ================= */
+  /* ================= Caça aos segredos no escuro ================= */
+  var TEXTOS = [];
+  var placar = document.getElementById('segredos');
   var proxChacoalho = 0;
-  var CARAS = [
-    ['cutucou', '😂', 'cutuca ele'], ['bravo', '😤', 'cutuca várias vezes seguidas'], ['hipnose', '🌀', 'segura o dedo nele'],
-    ['tonto', '😵‍💫', 'chacoalha o dedo rápido'], ['sono', '💤', 'deixa ele quieto um tempo'], ['aff', '🙄', 'espera ele se entediar'],
-    ['fofo', '🥺', 'às vezes ele pede algo'], ['hmm', '🤨', 'ele desconfia de você'], ['oxe', '😳', 'acorda ele'],
-    ['pisca', '😉', 'às vezes ele dá mole'], ['festa', '👑', 'tira uma previsão lendária']
-  ];
-  var vistas = {};
-  try { vistas = JSON.parse(localStorage.getItem('olho-caras') || '{}'); } catch (e) {}
-  var album = document.getElementById('album'), painel = document.getElementById('painel');
-  function atualizarAlbum() {
-    var n = CARAS.filter(function (c) { return vistas[c[0]]; }).length;
-    album.innerHTML = n === CARAS.length ? '👑 você viu todas as caras do olho!' : '👁️ caras do olho <b>' + n + '/' + CARAS.length + '</b> · ver';
-  }
-  function registrarCara(nome) {
-    if (!CARAS.some(function (c) { return c[0] === nome; }) || vistas[nome]) return;
-    vistas[nome] = 1;
-    try { localStorage.setItem('olho-caras', JSON.stringify(vistas)); } catch (e) {}
-    if (fase !== 'dentro') return;
-    atualizarAlbum();
-    album.classList.remove('pulo'); void album.offsetWidth; album.classList.add('pulo');
-    setTimeout(function () { album.classList.remove('pulo'); }, 300);
-    var r = album.getBoundingClientRect(); explodir(r.left + r.width / 2, r.bottom, 18, 180);
-  }
-  function abrirAlbum() {
-    var html = '';
-    CARAS.forEach(function (c) {
-      var ok = vistas[c[0]];
-      html += '<div class="cara' + (ok ? '' : ' nao') + '"><span>' + (ok ? c[1] : '❓') + '</span><small>' + (ok ? 'descoberta!' : c[2]) + '</small></div>';
+  function montarSegredos() {
+    var bloqueios = ['#mini', '#nome', '.bio', '.canais', 'footer', '#segredos'].map(function (q) {
+      var e = document.querySelector(q); return e ? e.getBoundingClientRect() : null;
+    }).filter(Boolean);
+    var livres = [];
+    for (var gy = 0; gy < 12; gy++) for (var gx = 0; gx < 5; gx++) {
+      var x = W * (.12 + gx * .19), y = H * (.06 + gy * .08);
+      var ok = bloqueios.every(function (b) { return x < b.left - 26 || x > b.right + 26 || y < b.top - 24 || y > b.bottom + 24; });
+      if (ok) livres.push({ x: x, y: y });
+    }
+    for (var i = livres.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var tmp = livres[i]; livres[i] = livres[j]; livres[j] = tmp; }
+    var esc = [];
+    for (var k = 0; k < livres.length && esc.length < 7; k++) {
+      if (esc.every(function (e) { return Math.hypot(e.x - livres[k].x, e.y - livres[k].y) > 95; })) esc.push(livres[k]);
+    }
+    segredos = esc.map(function (p, i) {
+      return { x: lim(p.x + (Math.random() - .5) * 30, 30, W - 30), y: p.y + (Math.random() - .5) * 20, r: 11 + Math.random() * 7,
+        achado: false, acc: 0, achadoT: 0, piscaT: 0, proxPisca: performance.now() + Math.random() * 3000 };
     });
-    document.getElementById('caras').innerHTML = html;
-    painel.hidden = false;
+    atualizarPlacar();
   }
-
-  /* ================= Oráculo: o que o olho vê em você hoje ================= */
-  var RECADOS = {
-    comum: [
-      'hoje alguém vai pensar em você do nada. talvez seja eu 👁️',
-      'você vai rir de uma coisa muito besta hoje. e vai ser ótimo',
-      'a próxima música aleatória que tocar pra você é um sinal 🎧',
-      'você vai abrir a geladeira 3 vezes sem querer nada',
-      'alguém tá olhando seu perfil agora. relaxa, não sou eu... 👀',
-      'sua bateria vai acabar na pior hora. carrega agora 🔋',
-      'um vídeo vai te prender mais do que devia hoje',
-      'você é mais observador do que pensa. eu sei, eu vejo tudo',
-      'a fila que você escolher vai andar mais devagar. sinto muito',
-      'hoje é dia de responder aquela mensagem que você tá devendo',
-      'hoje é um ótimo dia pra beber água. sério, bebe 💧',
-      'você vai achar algo que tinha perdido. ou perder o controle remoto de novo',
-      'seu cabelo vai colaborar hoje. aproveita 😎',
-      'você vai cantar uma música errada em voz alta. ninguém vai perceber'
-    ],
-    raro: [
-      'aquilo que você tá adiando? hoje é o dia de começar ✨',
-      'sonhe grande. planeje direitinho. conquiste no seu tempo',
-      'uma ideia boa vai aparecer quando você menos esperar. anota',
-      'você tá mais perto do que imagina. não desiste agora',
-      'alguém se inspira em você e você nem sabe',
-      'o que é seu tá guardado. continua fazendo a sua parte',
-      'hoje você vai aprender uma coisa que vai usar pra sempre'
-    ],
-    lendario: [
-      'os olhos nunca mentem: esse ano é seu. tira print e guarda',
-      'você foi escolhido pelo olho. pouquíssima gente vê essa mensagem',
-      'a sorte tá do seu lado hoje. faz aquele pedido que você tem vergonha de fazer',
-      'tudo que você plantou vai começar a dar fruto. confia no processo'
-    ]
-  };
-  var TOTAL_RECADOS = RECADOS.comum.length + RECADOS.raro.length + RECADOS.lendario.length;
-  var lidos = {};
-  try { lidos = JSON.parse(localStorage.getItem('olho-recados') || '{}'); } catch (e) {}
-  var tiradas = 0, lendo = false;
-  var carta = document.getElementById('carta'), cartao = document.getElementById('cartao');
-  function sortearRecado() {
-    var x = Math.random(), tipo = x < .08 ? 'lendario' : x < .33 ? 'raro' : 'comum';
-    var lista = RECADOS[tipo], novos = lista.filter(function (t) { return !lidos[t]; });
-    var pool = novos.length ? novos : lista;
-    return { tipo: tipo, txt: pool[Math.floor(Math.random() * pool.length)] };
+  function atualizarPlacar() {
+    var n = segredos.filter(function (s) { return s.achado; }).length, tot = segredos.length;
+    if (!tot) { placar.innerHTML = ''; return; }
+    var h = '';
+    segredos.forEach(function (sg) { h += '<span class="' + (sg.achado ? 'on' : '') + '">👁️</span>'; });
+    placar.innerHTML = h;
+    placar.setAttribute('aria-label', n + ' de ' + tot);
+    placar.classList.toggle('zerou', n === tot);
   }
-  function tirarPrevisao() {
-    if (lendo || fase !== 'dentro') return;
-    lendo = true; audio();
-    carta.hidden = true;
-    mini.dormindo = false; ultimoToque = performance.now();
-    reagir(mini, 'hipnose', balaoMini, performance.now(), '🔮 deixa eu ver...');
-    velAlvo = .9; ondaTAlvo = 1.6; revBaseAlvo = .45;
-    setTimeout(function () {
-      velAlvo = .07; ondaTAlvo = .8; revBaseAlvo = .13;
-      var r = sortearRecado();
-      lidos[r.txt] = 1; tiradas++;
-      try { localStorage.setItem('olho-recados', JSON.stringify(lidos)); } catch (e) {}
-      cartao.className = 'cartao ' + r.tipo;
-      document.getElementById('raridade').textContent = r.tipo === 'lendario' ? 'LENDÁRIA 👑' : r.tipo === 'raro' ? 'RARA ✨' : 'COMUM';
-      document.getElementById('recado').textContent = r.txt;
-      var n = Object.keys(lidos).length;
-      document.getElementById('contaPrev').textContent = 'previsões descobertas: ' + n + '/' + TOTAL_RECADOS;
-      var segue = tiradas === 2 || (tiradas > 2 && tiradas % 4 === 2) || r.tipo === 'lendario';
-      document.getElementById('ctaSegue').hidden = !segue;
-      document.getElementById('btSegue').hidden = !segue;
-      carta.hidden = false;
-      cartao.style.animation = 'none'; void cartao.offsetWidth; cartao.style.animation = '';
-      var bx = innerWidth / 2, by = innerHeight / 2;
-      if (r.tipo === 'lendario') {
-        reagir(mini, 'festa', balaoMini, performance.now(), 'LENDÁRIA!! 👑');
-        for (var i = 0; i < 6; i++) setTimeout(function () { explodir(W * (.15 + Math.random() * .7), H * (.15 + Math.random() * .6), 40, 420); }, i * 160);
-        if (navigator.vibrate) { try { navigator.vibrate([30, 50, 30, 50, 120]); } catch (e) {} }
-      } else if (r.tipo === 'raro') {
-        somAchou(); explodir(bx, by, 40, 300);
-        reagir(mini, 'fofo', balaoMini, performance.now(), 'ihh, essa é rara ✨');
-      } else { somPlim(); explodir(bx, by, 20, 220); }
-      lendo = false;
-    }, 1700);
-  }
-  function fecharTudo() { carta.hidden = true; painel.hidden = true; }
-  function ligarOraculo() {
-    document.getElementById('oraculo').addEventListener('click', tirarPrevisao);
-    document.getElementById('outra').addEventListener('click', tirarPrevisao);
-    document.getElementById('fecharCarta').addEventListener('click', fecharTudo);
-    document.getElementById('fecharAlbum').addEventListener('click', fecharTudo);
-    album.addEventListener('click', abrirAlbum);
-    [carta, painel].forEach(function (v) { v.addEventListener('click', function (e) { if (e.target === v) fecharTudo(); }); });
-    addEventListener('keydown', function (e) { if (e.key === 'Escape') fecharTudo(); });
+  function acharSegredo(sg, agora) {
+    sg.achado = true; sg.achadoT = agora;
+    explodir(sg.x, sg.y, 34, 240);
+    boing();
+    somAchou();
+    if (navigator.vibrate) { try { navigator.vibrate(25); } catch (e) {} }
+    atualizarPlacar();
+    placar.classList.remove('pulo'); void placar.offsetWidth; placar.classList.add('pulo');
+    setTimeout(function () { placar.classList.remove('pulo'); }, 300);
+    var n = segredos.filter(function (s) { return s.achado; }).length;
+    if (n === segredos.length) {
+      setTimeout(function () {
+        reagir(mini, 'festa', balaoMini, performance.now(), '🏆🔥');
+        for (var i = 0; i < 6; i++) setTimeout(function () { explodir(W * (.15 + Math.random() * .7), H * (.15 + Math.random() * .5), 40, 420); }, i * 180);
+        segredos.forEach(function (s2, i) { setTimeout(function () { s2.piscaT = performance.now(); }, i * 90); });
+        setTimeout(function () {
+          reagir(mini, 'fofo', balaoMini, performance.now(), 'me segue? 🥺');
+          var tk = document.querySelector('.canal.tiktok');
+          tk.classList.remove('chama'); void tk.offsetWidth; tk.classList.add('chama');
+        }, 3400);
+      }, 300);
+    } else if (!mini.reacao) reagir(mini, 'achou', balaoMini, agora, '👀');
   }
 
   var glitch = null;
@@ -1133,7 +1053,7 @@ var GEO = {"w": 900, "h": 614, "iris": [454.84507400755734, 325.45030119846376, 
     proxReacao = quieto ? 0 : performance.now() + 2600;
     corpo.classList.remove('mergulho', 'zoom');
     ultimoToque = performance.now();
-    atualizarAlbum();
+    setTimeout(montarSegredos, 80);
     agendarGlitch();
     try { sessionStorage.setItem('maiconteudo-entrou', '1'); } catch (e) {}
   }
@@ -1162,7 +1082,7 @@ var GEO = {"w": 900, "h": 614, "iris": [454.84507400755734, 325.45030119846376, 
     addEventListener('pointerdown', function () {
       if (fase === 'dentro' && mini.dormindo) { audio(); setTimeout(function () { reagir(mini, 'oxe', balaoMini, performance.now(), 'OXE! tava dormindo 😳'); }, 30); }
     });
-    ligarOraculo();
+    addEventListener('resize', function () { if (fase === 'dentro') montarSegredos(); });
     var ja = false;
     try { ja = sessionStorage.getItem('maiconteudo-entrou') === '1'; } catch (e) {}
     if (ja) mostrarDentro(); else comecarIntro();
