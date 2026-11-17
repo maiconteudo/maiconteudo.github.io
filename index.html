@@ -138,44 +138,16 @@ body.dentro .subir{animation:sobe .6s ease-out forwards;animation-delay:var(--d)
 .tiktok .selo{background:#05050A;box-shadow:0 0 0 1px #FFFFFF22 inset,0 6px 16px -6px #FF3D9A}
 .youtube .selo{background:#FFFFFF;box-shadow:0 0 0 1px #FFFFFF55 inset,0 6px 16px -6px #FF2D2D}
 #segredos{
-  position:fixed;left:50%;top:max(10px,env(safe-area-inset-top));z-index:5;transform:translateX(-50%);
-  display:flex;gap:6px;padding:6px 12px;border-radius:999px;background:#0E0719B3;
-  box-shadow:0 0 0 1px #FFFFFF1C inset;
-  opacity:0;visibility:hidden;transition:opacity .5s;pointer-events:none;
+  position:fixed;left:12px;top:max(12px,env(safe-area-inset-top));z-index:5;
+  padding:7px 13px;border-radius:999px;background:#0E0719D9;
+  box-shadow:0 0 0 1px #FFFFFF22 inset,0 6px 18px -8px #000;
+  font:700 14px/1.2 var(--texto);color:var(--nevoa);
+  opacity:0;visibility:hidden;transition:opacity .5s,transform .3s;pointer-events:none;
 }
 body.dentro #segredos{opacity:1;visibility:visible}
-#segredos span{font-size:17px;line-height:1;filter:grayscale(1) brightness(.45);transition:filter .3s}
-#segredos span.on{filter:none;animation:acende .5s cubic-bezier(.2,1.8,.4,1)}
-@keyframes acende{0%{transform:scale(.3)}100%{transform:none}}
-#segredos.zerou{background:linear-gradient(90deg,#FFD23D,#FF3D9A,#3DF0FF)}
-
-/* Contador: dois odômetros de painel de arcade */
-#contador{display:flex;gap:10px;width:100%;max-width:420px}
-.cx{
-  flex:1;display:flex;align-items:center;justify-content:center;gap:9px;position:relative;
-  min-height:50px;padding:6px 10px;border-radius:16px;
-  background:linear-gradient(180deg,#1A0F2E,#0C0617);
-  box-shadow:0 0 0 1px #FFFFFF1F inset,0 10px 22px -14px var(--c);
-  opacity:0;transition:opacity .6s;
-}
-body.contando .cx{opacity:1}
-.cx .ico{font-size:21px;line-height:1;filter:drop-shadow(0 0 6px var(--c))}
-.cx.vis{--c:#3DF0FF}
-.cx.ouro{--c:#FFD23D}
-.odo{display:flex;gap:2px;font-family:var(--titulo);font-weight:800;font-size:26px;line-height:1;height:1em;overflow:hidden;
-  -webkit-mask-image:linear-gradient(180deg,transparent,#000 22%,#000 78%,transparent);mask-image:linear-gradient(180deg,transparent,#000 22%,#000 78%,transparent)}
-.odo .d{display:block;height:1em;width:.62em;overflow:hidden;color:var(--c);text-shadow:0 0 10px var(--c)}
-.odo .d.zero{opacity:.28}
-.odo .fita{display:block;transition:transform 1.1s cubic-bezier(.2,.9,.2,1)}
-.odo .fita i{display:block;height:1em;font-style:normal;text-align:center}
-.cx.pulo{animation:pulsoC .9s ease-out}
-@keyframes pulsoC{0%{box-shadow:0 0 0 1px #FFFFFF1F inset,0 0 0 0 var(--c)}30%{box-shadow:0 0 0 2px var(--c) inset,0 0 30px 4px var(--c)}100%{box-shadow:0 0 0 1px #FFFFFF1F inset,0 10px 22px -14px var(--c)}}
-.mais{position:absolute;right:10px;top:-6px;font-family:var(--titulo);font-weight:800;font-size:22px;color:#FFD23D;text-shadow:0 0 12px #FFD23D;pointer-events:none;opacity:0}
-.mais.voa{animation:voa 1.6s ease-out forwards}
-@keyframes voa{0%{opacity:0;transform:translateY(10px) scale(.6)}20%{opacity:1;transform:translateY(-4px) scale(1.3)}100%{opacity:0;transform:translateY(-34px) scale(1)}}
-@media (prefers-reduced-motion:reduce){.odo .fita{transition:none}}
-.tiktok.chama{animation:chama .6s ease-in-out 4}
-@keyframes chama{50%{transform:scale(1.05) rotate(-1.5deg)}}
+#segredos b{color:var(--luz)}
+#segredos.pulo{transform:scale(1.15)}
+#segredos.zerou{color:#12081F;background:linear-gradient(90deg,#FFD23D,#FF3D9A,#3DF0FF)}
 .rotulo{flex:1;min-width:0}
 .nome{display:block;font-family:var(--titulo);font-weight:800;font-size:33px;line-height:1}
 .arroba{display:block;margin-top:3px;font-size:15px;color:var(--nevoa)}
@@ -197,6 +169,30 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--ciano);outline-offs
   h1 .l,.subir{opacity:1;transform:none}
   body.dentro h1 .l,body.dentro .subir{animation:none}
 }
+
+/* Contadores */
+#contador{display:flex;gap:8px;width:100%;max-width:420px}
+.cx{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;position:relative;min-height:48px;padding:6px 6px;border-radius:16px;border:0;color:inherit;font:inherit;
+  background:linear-gradient(180deg,#1A0F2E,#0C0617);box-shadow:0 0 0 1px #FFFFFF1F inset,0 10px 22px -14px var(--c);opacity:0;transition:opacity .6s}
+body.contando .cx{opacity:1}
+.cx .ico{font-size:19px;line-height:1;filter:drop-shadow(0 0 6px var(--c))}
+.cx.vis{--c:#3DF0FF}.cx.seg{--c:#FFD23D}.cx.cur{--c:#FF3D7A}
+button.cx{cursor:pointer;-webkit-tap-highlight-color:transparent}
+button.cx:active{transform:scale(.95)}
+button.cx .ico{filter:grayscale(1) brightness(.6)}
+button.cx.curtiu .ico{filter:drop-shadow(0 0 8px var(--c))}
+button.cx.curtiu{box-shadow:0 0 0 1.5px var(--c) inset,0 0 18px -4px var(--c)}
+.odo{display:flex;gap:1px;font-family:var(--titulo);font-weight:800;font-size:23px;line-height:1;height:1em;overflow:hidden;
+  -webkit-mask-image:linear-gradient(180deg,transparent,#000 22%,#000 78%,transparent);mask-image:linear-gradient(180deg,transparent,#000 22%,#000 78%,transparent)}
+.odo .d{display:block;height:1em;width:.62em;overflow:hidden;color:var(--c);text-shadow:0 0 10px var(--c)}
+.odo .d.zero{opacity:.28}
+.odo .fita{display:block;transition:transform 1.1s cubic-bezier(.2,.9,.2,1)}
+.odo .fita i{display:block;height:1em;font-style:normal;text-align:center}
+.cx.pulo{animation:pulsoC .9s ease-out}
+@keyframes pulsoC{0%{transform:scale(1)}30%{transform:scale(1.08);box-shadow:0 0 0 2px var(--c) inset,0 0 30px 4px var(--c)}100%{transform:scale(1)}}
+.cx.curtiu .ico{animation:coracao .6s cubic-bezier(.2,1.8,.4,1)}
+@keyframes coracao{0%{transform:scale(.4)}100%{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){.odo .fita{transition:none}}
 </style>
 </head>
 <body>
@@ -239,9 +235,10 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--ciano);outline-offs
     </a>
   </nav>
 
-  <div id="contador" class="subir" style="--d:1.38s" aria-label="Contador">
-    <div class="cx vis" id="cxVis"><span class="ico" aria-hidden="true">👁️</span><div class="odo" id="odoVis" role="text"></div></div>
-    <div class="cx ouro" id="cxOuro"><span class="ico" aria-hidden="true">🏆</span><div class="odo" id="odoOuro" role="text"></div><span class="mais" id="mais">+1</span></div>
+  <div id="contador" class="subir" style="--d:1.38s">
+    <div class="cx vis" id="cxVis"><span class="ico" aria-hidden="true">👁️</span><div class="odo" id="odoVis"></div></div>
+    <div class="cx seg" id="cxSeg"><span class="ico" aria-hidden="true">🔥</span><div class="odo" id="odoSeg"></div></div>
+    <button class="cx cur" id="cxCur" type="button" aria-label="Curtir"><span class="ico" aria-hidden="true">❤️</span><div class="odo" id="odoCur"></div></button>
   </div>
 
   <footer class="subir" style="--d:1.45s">
@@ -675,31 +672,6 @@ var GEO = {"w": 900, "h": 614, "iris": [454.84507400755734, 325.45030119846376, 
     }
   }
 
-  function olhinho(c, o, x, y, r, alfa, agora) {
-    var pis = o.piscaT > 0 ? 1 - Math.abs(1 - (agora - o.piscaT) / 90) : 0;
-    if (agora - o.piscaT > 180) { o.piscaT = 0; if (agora > o.proxPisca) { o.piscaT = agora; o.proxPisca = agora + 1800 + Math.random() * 4000; } }
-    var ab = Math.max(.08, 1 - Math.max(0, pis));
-    var ang = Math.atan2(py - y, px - x), d = Math.min(1, Math.hypot(px - x, py - y) / 160);
-    c.save();
-    c.globalAlpha = alfa;
-    c.beginPath();
-    c.moveTo(x - r, y);
-    c.quadraticCurveTo(x, y - r * 1.15 * ab, x + r, y);
-    c.quadraticCurveTo(x, y + r * 1.0 * ab, x - r, y);
-    c.closePath();
-    c.fillStyle = '#F3ECE6'; c.fill();
-    c.save(); c.clip();
-    var ix = x + Math.cos(ang) * r * .42 * d, iy = y + Math.sin(ang) * r * .22 * d;
-    var g = c.createRadialGradient(ix, iy, 0, ix, iy, r * .52);
-    g.addColorStop(0, '#C77A35'); g.addColorStop(.6, '#7A3F17'); g.addColorStop(1, '#2A1006');
-    c.fillStyle = g; c.beginPath(); c.arc(ix, iy, r * .52, 0, 6.29); c.fill();
-    c.fillStyle = '#050203'; c.beginPath(); c.arc(ix, iy, r * .24, 0, 6.29); c.fill();
-    c.fillStyle = '#FFFFFF'; c.beginPath(); c.arc(ix + r * .14, iy - r * .14, r * .09, 0, 6.29); c.fill();
-    c.restore();
-    c.lineWidth = Math.max(1.5, r * .12); c.strokeStyle = '#1A0A06'; c.stroke();
-    c.restore();
-  }
-
   function pintarFundo(t, dt, psico, agora, seguindo) {
     var s = t / 1000;
     tunel += (tunelAlvo - tunel) * Math.min(1, dt * 3);
@@ -744,9 +716,11 @@ var GEO = {"w": 900, "h": 614, "iris": [454.84507400755734, 325.45030119846376, 
     if (fase === 'dentro' && segredos.length) {
       cctx.setTransform(Q, 0, 0, Q, 0, 0);
       cctx.globalCompositeOperation = 'source-over';
+      cctx.textAlign = 'center'; cctx.textBaseline = 'middle';
+      cctx.font = '800 21px Figtree, system-ui, sans-serif';
       for (var sg = 0; sg < segredos.length; sg++) {
         var se = segredos[sg]; if (se.achado) continue;
-        olhinho(cctx, se, se.x, se.y, se.r, 1, agora);
+        cctx.fillStyle = '#FFFFFF'; cctx.fillText(se.txt, se.x, se.y);
       }
     }
     cctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -764,18 +738,13 @@ var GEO = {"w": 900, "h": 614, "iris": [454.84507400755734, 325.45030119846376, 
     }
     /* segredos já achados ficam brilhando */
     if (fase === 'dentro') {
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.font = '800 21px Figtree, system-ui, sans-serif';
       for (var sa = 0; sa < segredos.length; sa++) {
         var sx2 = segredos[sa]; if (!sx2.achado) continue;
-        var nasc = Math.min(1, (agora - sx2.achadoT) / 450);
-        var esc = nasc < 1 ? 1 + Math.sin(nasc * Math.PI) * .6 : 1;
-        var by = Math.sin(t * .003 + sa * 1.7) * 3;
-        ctx.globalCompositeOperation = 'lighter';
-        var gl2 = ctx.createRadialGradient(sx2.x, sx2.y + by, 0, sx2.x, sx2.y + by, sx2.r * 2.4);
-        gl2.addColorStop(0, 'hsla(' + ((matiz + sa * 50) % 360) + ',100%,60%,.35)'); gl2.addColorStop(1, 'hsla(0,0%,0%,0)');
-        ctx.fillStyle = gl2; ctx.beginPath(); ctx.arc(sx2.x, sx2.y + by, sx2.r * 2.4, 0, 6.29); ctx.fill();
-        ctx.globalCompositeOperation = 'source-over';
-        olhinho(ctx, sx2, sx2.x, sx2.y + by, sx2.r * esc, 1, agora);
-        ctx.globalCompositeOperation = 'lighter';
+        var pul = .75 + .25 * Math.sin(t * .004 + sa);
+        ctx.fillStyle = 'hsla(' + ((matiz + sa * 50) % 360) + ',100%,72%,' + (.85 * pul).toFixed(3) + ')';
+        ctx.fillText(sx2.txt, sx2.x, sx2.y);
       }
     }
     /* toques de neon: rastro do dedo e faíscas */
@@ -935,7 +904,7 @@ var GEO = {"w": 900, "h": 614, "iris": [454.84507400755734, 325.45030119846376, 
         if (seguindo) for (var k = 0; k < segredos.length; k++) {
           var sg = segredos[k];
           if (sg.achado) continue;
-          if (Math.hypot(px - sg.x, py - sg.y) < 48) { sg.acc += dt; if (sg.acc > .25) acharSegredo(sg, agora); }
+          if (Math.hypot(px - sg.x, py - sg.y) < 58) { sg.acc += dt; if (sg.acc > .3) acharSegredo(sg, agora); }
         }
       }
       if (mini.dormindo) proxReacao = Math.max(proxReacao, agora + 1500);
@@ -1008,7 +977,7 @@ var GEO = {"w": 900, "h": 614, "iris": [454.84507400755734, 325.45030119846376, 
   }
 
   /* ================= Caça aos segredos no escuro ================= */
-  var TEXTOS = [];
+  var TEXTOS = ['👀 achou!', 'sonhe', 'planeje', 'conquiste', 'o olho sabe 👁️', 'segue lá 😏', '🍀 sorte', 'psiu...'];
   var placar = document.getElementById('segredos');
   var proxChacoalho = 0;
   function montarSegredos() {
@@ -1018,33 +987,29 @@ var GEO = {"w": 900, "h": 614, "iris": [454.84507400755734, 325.45030119846376, 
     var livres = [];
     for (var gy = 0; gy < 12; gy++) for (var gx = 0; gx < 5; gx++) {
       var x = W * (.12 + gx * .19), y = H * (.06 + gy * .08);
-      var ok = bloqueios.every(function (b) { return x < b.left - 26 || x > b.right + 26 || y < b.top - 24 || y > b.bottom + 24; });
+      var ok = bloqueios.every(function (b) { return x < b.left - 70 || x > b.right + 70 || y < b.top - 26 || y > b.bottom + 26; });
       if (ok) livres.push({ x: x, y: y });
     }
     for (var i = livres.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var tmp = livres[i]; livres[i] = livres[j]; livres[j] = tmp; }
     var esc = [];
-    for (var k = 0; k < livres.length && esc.length < 7; k++) {
-      if (esc.every(function (e) { return Math.hypot(e.x - livres[k].x, e.y - livres[k].y) > 95; })) esc.push(livres[k]);
+    for (var k = 0; k < livres.length && esc.length < 6; k++) {
+      if (esc.every(function (e) { return Math.hypot(e.x - livres[k].x, e.y - livres[k].y) > 120; })) esc.push(livres[k]);
     }
+    var txts = TEXTOS.slice().sort(function () { return Math.random() - .5; });
     segredos = esc.map(function (p, i) {
-      return { x: lim(p.x + (Math.random() - .5) * 30, 30, W - 30), y: p.y + (Math.random() - .5) * 20, r: 11 + Math.random() * 7,
-        achado: false, acc: 0, achadoT: 0, piscaT: 0, proxPisca: performance.now() + Math.random() * 3000 };
+      return { x: lim(p.x, 60, W - 60), y: p.y, txt: txts[i], achado: false, acc: 0 };
     });
     atualizarPlacar();
   }
   function atualizarPlacar() {
     var n = segredos.filter(function (s) { return s.achado; }).length, tot = segredos.length;
-    if (!tot) { placar.innerHTML = ''; return; }
-    var h = '';
-    segredos.forEach(function (sg) { h += '<span class="' + (sg.achado ? 'on' : '') + '">👁️</span>'; });
-    placar.innerHTML = h;
-    placar.setAttribute('aria-label', n + ' de ' + tot);
-    placar.classList.toggle('zerou', n === tot);
+    if (!tot) { placar.textContent = ''; return; }
+    if (n === tot) { placar.innerHTML = '🏆 você achou todos os segredos!'; placar.classList.add('zerou'); }
+    else { placar.innerHTML = '👁️ <b>' + n + '/' + tot + '</b> segredos · passa o dedo no escuro'; placar.classList.remove('zerou'); }
   }
   function acharSegredo(sg, agora) {
-    sg.achado = true; sg.achadoT = agora;
+    sg.achado = true;
     explodir(sg.x, sg.y, 34, 240);
-    boing();
     somAchou();
     if (navigator.vibrate) { try { navigator.vibrate(25); } catch (e) {} }
     atualizarPlacar();
@@ -1053,101 +1018,11 @@ var GEO = {"w": 900, "h": 614, "iris": [454.84507400755734, 325.45030119846376, 
     var n = segredos.filter(function (s) { return s.achado; }).length;
     if (n === segredos.length) {
       setTimeout(function () {
-        contarCompleto();
-        reagir(mini, 'festa', balaoMini, performance.now(), '🏆🔥');
+        reagir(mini, 'festa', balaoMini, performance.now());
         for (var i = 0; i < 6; i++) setTimeout(function () { explodir(W * (.15 + Math.random() * .7), H * (.15 + Math.random() * .5), 40, 420); }, i * 180);
-        segredos.forEach(function (s2, i) { setTimeout(function () { s2.piscaT = performance.now(); }, i * 90); });
-        setTimeout(function () {
-          reagir(mini, 'fofo', balaoMini, performance.now(), 'me segue? 🥺');
-          var tk = document.querySelector('.canal.tiktok');
-          tk.classList.remove('chama'); void tk.offsetWidth; tk.classList.add('chama');
-        }, 3400);
       }, 300);
-    } else if (!mini.reacao) reagir(mini, 'achou', balaoMini, agora, '👀');
+    } else if (!mini.reacao) reagir(mini, 'achou', balaoMini, agora, n === 1 ? 'achou um! tem mais 👀' : 'mais um! 🔥');
   }
-
-
-  /* ================= Contador global (visitas e quem achou tudo) ================= */
-  var NS = 'maiconteudo-bio', contagem = { vis: null, ouro: null, prov: -1 };
-  var PROVS = [
-    { hit: function (k) { return 'https://abacus.jasoncameron.dev/hit/' + NS + '/' + k; },
-      get: function (k) { return 'https://abacus.jasoncameron.dev/get/' + NS + '/' + k; },
-      ler: function (j) { return j && typeof j.value === 'number' ? j.value : null; } },
-    { hit: function (k) { return 'https://api.counterapi.dev/v1/' + NS + '/' + k + '/up'; },
-      get: function (k) { return 'https://api.counterapi.dev/v1/' + NS + '/' + k; },
-      ler: function (j) { return j && typeof j.count === 'number' ? j.count : null; } }
-  ];
-  function pedir(url, ler) {
-    return new Promise(function (ok) {
-      var c = window.AbortController ? new AbortController() : null;
-      var t = setTimeout(function () { if (c) c.abort(); ok(null); }, 5000);
-      fetch(url, c ? { signal: c.signal, cache: 'no-store' } : { cache: 'no-store' })
-        .then(function (r) { return r.ok ? r.json() : null; })
-        .then(function (j) { clearTimeout(t); ok(ler(j)); })
-        .catch(function () { clearTimeout(t); ok(null); });
-    });
-  }
-  function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
-  function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
-  function carregarContagem() {
-    var agora = Date.now(), ult = +lsGet('mc-vis') || 0, somar = agora - ult > 6 * 3600 * 1000;
-    (function tentar(i) {
-      if (i >= PROVS.length) return;
-      var P = PROVS[i];
-      pedir(somar ? P.hit('visitas') : P.get('visitas'), P.ler).then(function (v) {
-        if (v == null) return tentar(i + 1);
-        if (somar) lsSet('mc-vis', String(agora));
-        contagem.prov = i; contagem.vis = v;
-        pedir(P.get('completos'), P.ler).then(function (o) {
-          contagem.ouro = o == null ? 0 : o;
-          mostrarContador();
-        });
-      });
-    })(0);
-  }
-  function montarOdo(el) {
-    var d = Math.max(4, String(Math.max(contagem.vis || 0, contagem.ouro || 0)).length + 1);
-    var h = '';
-    for (var i = 0; i < d; i++) { h += '<span class="d"><span class="fita">'; for (var n = 0; n < 10; n++) h += '<i>' + n + '</i>'; h += '</span></span>'; }
-    el.innerHTML = h; el._d = d;
-  }
-  function setarOdo(el, valor, animar) {
-    if (!el._d) montarOdo(el);
-    var txt = String(valor); while (txt.length < el._d) txt = '0' + txt;
-    var cols = el.children, achouNaoZero = false;
-    for (var i = 0; i < cols.length; i++) {
-      var dig = +txt.charAt(i); if (dig) achouNaoZero = true;
-      cols[i].classList.toggle('zero', !achouNaoZero && i < cols.length - 1);
-      var f = cols[i].firstChild;
-      (function (f, dig, i) { setTimeout(function () { f.style.transform = 'translateY(' + (-dig) + 'em)'; }, animar ? 80 * i : 0); })(f, dig, i);
-    }
-    el.setAttribute('aria-label', String(valor));
-  }
-  function mostrarContador() {
-    if (contagem.vis == null) return;
-    var ov = document.getElementById('odoVis'), oo = document.getElementById('odoOuro');
-    montarOdo(ov); montarOdo(oo);
-    setarOdo(ov, 0, false); setarOdo(oo, 0, false);
-    corpo.classList.add('contando');
-    setTimeout(function () { setarOdo(ov, contagem.vis, true); setarOdo(oo, contagem.ouro, true); }, 900);
-  }
-  function contarCompleto() {
-    if (contagem.prov < 0) return;
-    var cx = document.getElementById('cxOuro'), oo = document.getElementById('odoOuro'), mais = document.getElementById('mais');
-    function efeito() {
-      cx.classList.remove('pulo'); void cx.offsetWidth; cx.classList.add('pulo');
-    }
-    if (lsGet('mc-completou')) { efeito(); return; }
-    var P = PROVS[contagem.prov];
-    pedir(P.hit('completos'), P.ler).then(function (o) {
-      if (o == null) return;
-      lsSet('mc-completou', '1');
-      contagem.ouro = o;
-      setarOdo(oo, o, true); efeito();
-      mais.classList.remove('voa'); void mais.offsetWidth; mais.classList.add('voa');
-    });
-  }
-  carregarContagem();
 
   var glitch = null;
   function agendarGlitch() {
@@ -1203,6 +1078,71 @@ var GEO = {"w": 900, "h": 614, "iris": [454.84507400755734, 325.45030119846376, 
     if (ja) mostrarDentro(); else comecarIntro();
     requestAnimationFrame(quadro);
   }
+})();
+</script>
+<script>
+(function () {
+  var NS = 'maiconteudo-bio', corpo = document.body, V = { vis: 0, seg: 0, cur: 0 }, prov = -1;
+  var PROVS = [
+    { hit: function (k) { return 'https://abacus.jasoncameron.dev/hit/' + NS + '/' + k; }, get: function (k) { return 'https://abacus.jasoncameron.dev/get/' + NS + '/' + k; }, ler: function (j) { return j && typeof j.value === 'number' ? j.value : null; } },
+    { hit: function (k) { return 'https://api.counterapi.dev/v1/' + NS + '/' + k + '/up'; }, get: function (k) { return 'https://api.counterapi.dev/v1/' + NS + '/' + k; }, ler: function (j) { return j && typeof j.count === 'number' ? j.count : null; } }
+  ];
+  function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function pedir(url, ler) {
+    return new Promise(function (ok) {
+      var c = window.AbortController ? new AbortController() : null, t = setTimeout(function () { if (c) c.abort(); ok(null); }, 5000);
+      var o = { cache: 'no-store', keepalive: true }; if (c) o.signal = c.signal;
+      fetch(url, o).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) { clearTimeout(t); ok(ler(j)); }).catch(function () { clearTimeout(t); ok(null); });
+    });
+  }
+  function montar(el, d) {
+    var h = ''; for (var i = 0; i < d; i++) { h += '<span class="d"><span class="fita">'; for (var n = 0; n < 10; n++) h += '<i>' + n + '</i>'; h += '</span></span>'; }
+    el.innerHTML = h; el._d = d;
+  }
+  function setar(el, v, anim) {
+    var t = String(v); while (t.length < el._d) t = '0' + t;
+    var c = el.children, nz = false;
+    for (var i = 0; i < c.length; i++) {
+      var g = +t.charAt(i); if (g) nz = true;
+      c[i].classList.toggle('zero', !nz && i < c.length - 1);
+      (function (f, g, i) { setTimeout(function () { f.style.transform = 'translateY(' + (-g) + 'em)'; }, anim ? 80 * i : 0); })(c[i].firstChild, g, i);
+    }
+  }
+  var el = { vis: document.getElementById('odoVis'), seg: document.getElementById('odoSeg'), cur: document.getElementById('odoCur') };
+  function pulso(id) { var x = document.getElementById(id); x.classList.remove('pulo'); void x.offsetWidth; x.classList.add('pulo'); }
+  function mostrar() {
+    var d = Math.max(4, String(Math.max(V.vis, V.seg, V.cur)).length + 1);
+    for (var k in el) { montar(el[k], d); setar(el[k], 0, false); }
+    corpo.classList.add('contando');
+    setTimeout(function () { for (var k in el) setar(el[k], V[k], true); }, 900);
+  }
+  var btn = document.getElementById('cxCur');
+  if (lsGet('mc-curtiu')) btn.classList.add('curtiu');
+  btn.addEventListener('click', function () {
+    if (prov < 0 || lsGet('mc-curtiu')) { pulso('cxCur'); return; }
+    lsSet('mc-curtiu', '1'); btn.classList.add('curtiu'); pulso('cxCur');
+    if (navigator.vibrate) { try { navigator.vibrate(20); } catch (e) {} }
+    var P = PROVS[prov];
+    pedir(P.hit('curtidas'), P.ler).then(function (o) { if (o != null) { V.cur = o; setar(el.cur, o, true); } });
+  });
+  document.querySelectorAll('.canal').forEach(function (a) {
+    a.addEventListener('click', function () {
+      if (prov < 0 || lsGet('mc-seguiu')) return;
+      lsSet('mc-seguiu', '1');
+      var P = PROVS[prov]; pedir(P.hit('seguiram'), P.ler);
+    });
+  });
+  (function tentar(i) {
+    if (i >= PROVS.length) return;
+    var P = PROVS[i], somar = Date.now() - (+lsGet('mc-vis') || 0) > 6 * 3600 * 1000;
+    pedir(somar ? P.hit('visitas') : P.get('visitas'), P.ler).then(function (v) {
+      if (v == null) return tentar(i + 1);
+      if (somar) lsSet('mc-vis', String(Date.now()));
+      prov = i; V.vis = v;
+      Promise.all([pedir(P.get('seguiram'), P.ler), pedir(P.get('curtidas'), P.ler)]).then(function (r) { V.seg = r[0] || 0; V.cur = r[1] || 0; mostrar(); });
+    });
+  })(0);
 })();
 </script>
 </body>
