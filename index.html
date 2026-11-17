@@ -1193,8 +1193,15 @@ var GEO = {"w": 900, "h": 614, "iris": [454.84507400755734, 325.45030119846376, 
 <script>
 (function () {
   var NS = 'maiconteudo-bio', corpo = document.body, V = { vis: 0, seg: 0, cur: 0 }, prov = -1;
+  var DIAG = location.hash === '#diag', dgEl = null;
+  function dg(m) {
+    if (!DIAG) return;
+    if (!dgEl) { dgEl = document.createElement('pre'); dgEl.style.cssText = 'position:fixed;left:6px;right:6px;bottom:6px;z-index:99;margin:0;padding:8px;background:#000C;color:#8F8;font:11px/1.35 monospace;white-space:pre-wrap;max-height:40vh;overflow:auto;user-select:text'; document.body.appendChild(dgEl); }
+    dgEl.textContent += m + '\n';
+  }
   var PROVS = [
     { hit: function (k) { return 'https://abacus.jasoncameron.dev/hit/' + NS + '/' + k; }, get: function (k) { return 'https://abacus.jasoncameron.dev/get/' + NS + '/' + k; }, ler: function (j) { return j && typeof j.value === 'number' ? j.value : null; } },
+    { hit: function (k) { return 'https://abacus.jsn.cam/hit/' + NS + '/' + k; }, get: function (k) { return 'https://abacus.jsn.cam/get/' + NS + '/' + k; }, ler: function (j) { return j && typeof j.value === 'number' ? j.value : null; } },
     { hit: function (k) { return 'https://api.counterapi.dev/v1/' + NS + '/' + k + '/up'; }, get: function (k) { return 'https://api.counterapi.dev/v1/' + NS + '/' + k; }, ler: function (j) { return j && typeof j.count === 'number' ? j.count : null; } }
   ];
   function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
@@ -1202,8 +1209,8 @@ var GEO = {"w": 900, "h": 614, "iris": [454.84507400755734, 325.45030119846376, 
   function pedir(url, ler) {
     return new Promise(function (ok) {
       var c = window.AbortController ? new AbortController() : null, t = setTimeout(function () { if (c) c.abort(); ok(null); }, 5000);
-      var o = { cache: 'no-store', keepalive: true }; if (c) o.signal = c.signal;
-      fetch(url, o).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) { clearTimeout(t); ok(ler(j)); }).catch(function () { clearTimeout(t); ok(null); });
+      var o = { cache: 'no-store' }; if (c) o.signal = c.signal;
+      fetch(url, o).then(function (r) { dg(r.status + ' ' + url.replace('https://', '')); return r.ok ? r.json() : null; }).then(function (j) { clearTimeout(t); dg('-> ' + JSON.stringify(j)); ok(ler(j)); }).catch(function (e) { clearTimeout(t); dg('ERRO ' + url.replace('https://', '') + ' ' + e); ok(null); });
     });
   }
   function montar(el, d) {
