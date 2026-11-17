@@ -76,7 +76,7 @@ body.dentro #intro,body.dentro #pular{display:none}
 @keyframes sumir{from{opacity:1;transform:scale(1) rotate(var(--r,-4deg))}to{opacity:0;transform:scale(.6) rotate(6deg)}}
 #balao{right:3%;top:-4%;--r:-5deg}
 #balao::after{left:30px;bottom:-7px}
-#balaoMini{left:-8%;bottom:88%;font-size:16px;padding:8px 13px;--r:3deg;max-width:min(78vw,300px);white-space:normal;text-align:center}
+#balaoMini{z-index:9;left:-8%;bottom:88%;font-size:16px;padding:8px 13px;--r:3deg;max-width:min(78vw,300px);white-space:normal;text-align:center}
 #balaoMini::after{left:18px;bottom:-7px}
 
 #flash{position:fixed;inset:0;z-index:4;background:#FFF6EC;opacity:0;pointer-events:none}
@@ -86,7 +86,7 @@ body.dentro #intro,body.dentro #pular{display:none}
 /* Do lado de dentro */
 #links{gap:18px;overflow-y:auto;opacity:0;visibility:hidden;-webkit-user-select:text;user-select:text}
 body.dentro #links{opacity:1;visibility:visible;transition:opacity .4s}
-#mini{display:block;width:180px;aspect-ratio:900/614;background:none;border:0;padding:0;cursor:pointer;margin:-14px 0 -18px}
+#mini{position:relative;z-index:1;will-change:transform;display:block;width:180px;aspect-ratio:900/614;background:none;border:0;padding:0;cursor:pointer;margin:-14px 0 -18px}
 h1{margin:0;font-family:var(--titulo);font-weight:800;line-height:.9;white-space:nowrap;font-size:72px;letter-spacing:.01em}
 h1 .l{
   display:inline-block;opacity:0;transform:translateY(-70px) scale(1.7);
@@ -193,6 +193,7 @@ button.cx.curtiu{box-shadow:0 0 0 1.5px var(--c) inset,0 0 18px -4px var(--c)}
 .cx.curtiu .ico{animation:coracao .6s cubic-bezier(.2,1.8,.4,1)}
 @keyframes coracao{0%{transform:scale(.4)}100%{transform:scale(1)}}
 @media (prefers-reduced-motion:reduce){.odo .fita{transition:none}}
+body.inchado #mini{z-index:8}
 </style>
 </head>
 <body>
@@ -284,7 +285,8 @@ var GEO = {"w": 900, "h": 614, "iris": [454.84507400755734, 325.45030119846376, 
       abre: 1, abreT0: -1, abreDur: 1000,
       dil: 1, dilAlvo: 1, palp: 0, palpAlvo: 0,
       sqx: 1, sqy: 1, giro: 0, giroForca: 0, onda: 0, tremor: 0,
-      reacao: null, ativo: false, brilhoFofo: 0, raiva: 0, raivaAlvo: 0, dormindo: false
+      reacao: null, ativo: false, brilhoFofo: 0, raiva: 0, raivaAlvo: 0, dormindo: false,
+      verm: 0, vermAlvo: 0, inch: 0, inchV: 0, salto: null, res: null, el: null
     };
     o.buf = document.createElement('canvas'); o.bctx = o.buf.getContext('2d');
     return o;
@@ -292,10 +294,35 @@ var GEO = {"w": 900, "h": 614, "iris": [454.84507400755734, 325.45030119846376, 
   function medirOlho(o) {
     var r = o.cv.getBoundingClientRect();
     var d = Math.min(window.devicePixelRatio || 1, 1.5);
-    var w = Math.max(2, Math.round(r.width * d)), h = Math.max(2, Math.round(r.height * d));
+    var rw = o.res ? o.cv.clientWidth * o.res : r.width, rh = o.res ? o.cv.clientHeight * o.res : r.height;
+    var w = Math.max(2, Math.round(rw * d)), h = Math.max(2, Math.round(rh * d));
     if (o.cv.width !== w || o.cv.height !== h) { o.cv.width = w; o.cv.height = h; o.buf.width = w; o.buf.height = h; }
     o.c = o.onda > .01 ? o.bctx : o.ctx;
   }
+  /* veias do olho vermelho (geradas uma vez) */
+  var VEIAS = (function () {
+    var sd = 7; function rnd() { sd = (sd * 16807) % 2147483647; return sd / 2147483647; }
+    var v = [], x0 = CIMA[0][0], x1 = CIMA[CIMA.length - 1][0];
+    for (var i = 0; i < 20; i++) {
+      var x = mix(x0, x1, i < 8 ? rnd() * .22 : i < 16 ? .78 + rnd() * .22 : .2 + rnd() * .6);
+      var cima = rnd() < .5, y = cima ? curvaY(CIMA, x) + 6 : curvaY(BAIXO, x) - 6;
+      var alvoD = IR * (1.05 + rnd() * .5), pts = [[x, y]], bx = x, by = y;
+      for (var k = 0; k < 9; k++) {
+        var dx = IC[0] - bx, dy = IC[1] - by, d = Math.hypot(dx, dy);
+        if (d < alvoD) break;
+        var st = Math.min(d - alvoD, 20 + rnd() * 16);
+        bx += dx / d * st + (rnd() - .5) * 22; by += dy / d * st + (rnd() - .5) * 22;
+        pts.push([bx, by]);
+      }
+      var ram = [];
+      if (pts.length > 4) {
+        var m = pts[Math.floor(pts.length / 2)], ax = rnd() * 6.28, ln = 28 + rnd() * 30;
+        ram = [m, [m[0] + Math.cos(ax) * ln * .5 + (rnd() - .5) * 8, m[1] + Math.sin(ax) * ln * .5], [m[0] + Math.cos(ax) * ln, m[1] + Math.sin(ax) * ln]];
+      }
+      v.push({ pts: pts, ram: ram, w: 1.4 + rnd() * 2.2 });
+    }
+    return v;
+  })();
   function caminhoAbertura(c) {
     c.beginPath();
     c.moveTo(CIMA[0][0], CIMA[0][1]);
@@ -319,6 +346,19 @@ var GEO = {"w": 900, "h": 614, "iris": [454.84507400755734, 325.45030119846376, 
     var sx = 1 - .13 * Math.abs(o.gx), sy = 1 - .06 * Math.abs(o.gy);
     c.save();
     caminhoAbertura(c); c.clip();
+    if (o.verm > .01) {
+      c.lineCap = 'round'; c.lineJoin = 'round';
+      for (var vi = 0; vi < VEIAS.length; vi++) {
+        var vn = VEIAS[vi], ls = [vn.pts, vn.ram];
+        for (var li = 0; li < 2; li++) {
+          var pt = ls[li]; if (pt.length < 2) continue;
+          c.strokeStyle = 'rgba(190,22,34,' + ((li ? .45 : .7) * o.verm).toFixed(3) + ')'; c.lineWidth = vn.w * (li ? .6 : 1);
+          c.beginPath(); c.moveTo(pt[0][0], pt[0][1]);
+          for (var pi = 1; pi < pt.length; pi++) c.lineTo(pt[pi][0], pt[pi][1]);
+          c.stroke();
+        }
+      }
+    }
     c.save();
     c.translate(IC[0] + ox, IC[1] + oy);
     c.scale(sx, sy);
@@ -353,6 +393,12 @@ var GEO = {"w": 900, "h": 614, "iris": [454.84507400755734, 325.45030119846376, 
       c.globalCompositeOperation = 'multiply';
       c.fillStyle = 'rgba(255,70,80,' + (.6 * o.raiva).toFixed(3) + ')';
       c.fillRect(0, 0, EW, EH);
+      c.globalCompositeOperation = 'source-over';
+    }
+    if (o.verm > .01) {
+      var gv = c.createRadialGradient(IC[0], IC[1], IR * .95, IC[0], IC[1], EW * .55);
+      gv.addColorStop(0, 'rgba(255,110,112,' + (.12 * o.verm).toFixed(3) + ')'); gv.addColorStop(1, 'rgba(255,60,70,' + (.62 * o.verm).toFixed(3) + ')');
+      c.globalCompositeOperation = 'multiply'; c.fillStyle = gv; c.fillRect(0, 0, EW, EH);
       c.globalCompositeOperation = 'source-over';
     }
     c.restore();
@@ -483,6 +529,12 @@ var GEO = {"w": 900, "h": 614, "iris": [454.84507400755734, 325.45030119846376, 
         o.dilAlvo = 1 + .8 * f; o.fofo = f > .3 ? 1 : 0;
         var b = Math.sin(p * Math.PI * 10) * .05 * f; o.sqx = 1 - b; o.sqy = 1 + b;
       } },
+    alivio: { dur: 1300, fala: '😮‍💨', som: null,
+      faz: function (o, p) {
+        o.palpAlvo = p < .5 ? .55 : 0; o.tx = 0; o.ty = .1;
+        var s = .22 * Math.cos(p * 16) * Math.exp(-p * 3.5);
+        o.sqy = 1 - s; o.sqx = 1 + s * .8;
+      } },
     cutucou: { dur: 900, fala: 'ai! não cutuca 😂', som: function () { boing(); },
       faz: function (o, p) {
         o.palpAlvo = p < .55 ? .78 : 0; o.tx = 0; o.ty = 0;
@@ -496,6 +548,32 @@ var GEO = {"w": 900, "h": 614, "iris": [454.84507400755734, 325.45030119846376, 
     var op = ORDEM.filter(function (n) { return n !== ultimaReacao; });
     ultimaReacao = op[Math.floor(Math.random() * op.length)];
     return ultimaReacao;
+  }
+  var ultimoBravo = -1e9;
+  function saltar() {
+    var el = mini.el, ag = performance.now();
+    if (mini.salto || !el) return;
+    var r = el.getBoundingClientRect();
+    mini.base = { cx: r.left + r.width / 2, cy: r.top + r.height / 2, h: r.height };
+    mini.esc = Math.min(2.15, innerWidth * .94 / r.width);
+    mini.res = mini.esc;
+    mini.salto = { t0: ag }; mini.reacao = null; mini.dormindo = false;
+    corpo.classList.add('inchado');
+    proxReacao = ag + 12000;
+    somSalta();
+    if (navigator.vibrate) { try { navigator.vibrate([30, 40, 60]); } catch (e) {} }
+    balaoMini.textContent = '😱'; balaoMini.classList.remove('ver', 'sai'); void balaoMini.offsetWidth; balaoMini.classList.add('ver');
+    clearTimeout(balaoMini._t);
+    balaoMini._t = setTimeout(function () { balaoMini.classList.remove('ver'); balaoMini.classList.add('sai'); }, 2200);
+  }
+  function desinchar() {
+    if (!mini.salto) return;
+    var ag = performance.now();
+    mini.salto = null; ultimoToque = ag; proxReacao = ag + 9000;
+    somPop();
+    if (navigator.vibrate) { try { navigator.vibrate(25); } catch (e) {} }
+    explodir(mini.base.cx, mini.base.cy, 30, 260);
+    reagir(mini, 'alivio', balaoMini, ag);
   }
   function reagir(o, nome, balao, agora, fala) {
     if (quieto) return;
@@ -512,15 +590,21 @@ var GEO = {"w": 900, "h": 614, "iris": [454.84507400755734, 325.45030119846376, 
   }
 
   function atualizar(o, agora, dt, alvoX, alvoY, seguindo) {
-    o.palpAlvo = 0; o.dilAlvo = 1; o.giroAlvo = 0; o.ondaAlvo = 0; o.fofo = 0; o.tremor = 0; o.raivaAlvo = 0;
+    o.palpAlvo = 0; o.dilAlvo = 1; o.giroAlvo = 0; o.ondaAlvo = 0; o.fofo = 0; o.tremor = 0; o.raivaAlvo = 0; o.vermAlvo = 0;
     o.sqx = 1; o.sqy = 1;
     var rapido;
-    if (o.reacao) {
+    if (o.salto) {
+      o.reacao = null; o.vermAlvo = 1; o.palpAlvo = 0; o.tremor = 4 + Math.sin(agora * .03) * 2; o.dormindo = false;
+      o.tx = Math.sin(agora * .004) * .08; o.ty = Math.cos(agora * .005) * .06;
+      o.sqx = 1 + Math.sin(agora * .045) * .012; o.sqy = 1 - Math.sin(agora * .045) * .012;
+      rapido = 8;
+    }
+    if (o.reacao && !o.salto) {
       var p = (agora - o.reacao.t0) / o.reacao.r.dur;
       if (p >= 1) o.reacao = null;
       else { o.reacao.r.faz(o, p); rapido = 22; }
     }
-    if (!o.reacao || rapido == null) {
+    if (rapido == null) {
       if (seguindo) {
         var r = o.cv.getBoundingClientRect();
         var cx = r.left + r.width * .505, cy = r.top + r.height * .53;
@@ -548,7 +632,19 @@ var GEO = {"w": 900, "h": 614, "iris": [454.84507400755734, 325.45030119846376, 
     o.giroForca += (o.giroAlvo - o.giroForca) * (1 - Math.exp(-dt * 5));
     o.onda += (o.ondaAlvo - o.onda) * (1 - Math.exp(-dt * 5));
     o.raiva += (o.raivaAlvo - o.raiva) * (1 - Math.exp(-dt * 5));
-    if (o.dormindo && !o.reacao) {
+    o.verm += (o.vermAlvo - o.verm) * (1 - Math.exp(-dt * (o.vermAlvo > o.verm ? 6 : 2.2)));
+    if (o.el) {
+      o.inchV += (((o.salto ? 1 : 0) - o.inch) * 230 - o.inchV * 11) * dt; o.inch += o.inchV * dt;
+      if (!o.salto && o.inch < .004 && Math.abs(o.inchV) < .08) {
+        if (o.res) { o.res = null; o.el.style.transform = ''; corpo.classList.remove('inchado'); }
+        o.inch = 0; o.inchV = 0;
+      } else if (o.res) {
+        var sc = 1 + (o.esc - 1) * o.inch, hh = o.base.h;
+        var ty = Math.max(0, 62 + hh * sc / 2 - o.base.cy) * Math.min(1, o.inch);
+        o.el.style.transform = 'translateY(' + ty.toFixed(1) + 'px) scale(' + sc.toFixed(3) + ') rotate(' + (o.salto ? Math.sin(agora * .05) * 1.1 : 0).toFixed(2) + 'deg)';
+      }
+    }
+    if (o.dormindo && !o.reacao && !o.salto) {
       o.palpAlvo = .9 + Math.sin(agora * .0015) * .04;
       o.palp += (o.palpAlvo - o.palp) * (1 - Math.exp(-dt * 2));
       o.tx = 0; o.ty = .25;
@@ -556,7 +652,7 @@ var GEO = {"w": 900, "h": 614, "iris": [454.84507400755734, 325.45030119846376, 
     o.giro = o.giroForca > .01 ? o.giro + dt * o.giroForca * 9 : o.giro * (1 - Math.min(1, dt * 6));
 
     /* piscada natural */
-    if (o.piscaT0 < 0 && agora > o.proxPisca && o.ativo && !o.reacao) {
+    if (o.piscaT0 < 0 && agora > o.proxPisca && o.ativo && !o.reacao && !o.salto) {
       o.piscaT0 = agora; o.proxPisca = agora + 2300 + Math.random() * 3600; o.dupla = Math.random() < .2;
     }
     if (o.piscaT0 >= 0) {
@@ -832,6 +928,12 @@ var GEO = {"w": 900, "h": 614, "iris": [454.84507400755734, 325.45030119846376, 
     var t0 = quando || a.currentTime + .01;
     tom(a, 'triangle', t0, 180, 160, .7, .34, [15, 75]);
   }
+  function somSalta() { var a = pronto(); if (!a) return; var t = a.currentTime + .01;
+    tom(a, 'sine', t, 260, 1500, .22, .32); tom(a, 'triangle', t + .02, 130, 70, .5, .3, [10, 40]); ruido(a, t, .25, 2400, 600, .2);
+    tom(a, 'sine', t + .3, 1500, 1350, .5, .1, [30, 18]); }
+  function somPop() { var a = pronto(); if (!a) return; var t = a.currentTime + .01;
+    tom(a, 'sine', t, 950, 160, .16, .36); ruido(a, t, .12, 3000, 800, .3); tom(a, 'triangle', t + .16, 220, 150, .35, .25, [14, 40]);
+    tom(a, 'sine', t + .45, 500, 400, .4, .1, [4, 10]); }
   function somAff() { var a = pronto(); if (!a) return; var t = a.currentTime + .02;
     tom(a, 'sine', t, 1100, 300, .55, .2, [6, 20]); ruido(a, t + .05, .5, 1800, 500, .18); }
   function somFofo() { var a = pronto(); if (!a) return; var t = a.currentTime + .02;
@@ -863,6 +965,7 @@ var GEO = {"w": 900, "h": 614, "iris": [454.84507400755734, 325.45030119846376, 
   /* ================= Cenas ================= */
   var grande = criarOlho(document.querySelector('#olho canvas'));
   var mini = criarOlho(document.querySelector('#mini canvas'));
+  mini.el = document.getElementById('mini');
   var balao = document.getElementById('balao'), balaoMini = document.getElementById('balaoMini');
   var sussurro = document.getElementById('sussurro'), dica = document.getElementById('dica'), flash = document.getElementById('flash');
   var timers = [], proxReacao = 0;
@@ -908,7 +1011,8 @@ var GEO = {"w": 900, "h": 614, "iris": [454.84507400755734, 325.45030119846376, 
         }
       }
       if (mini.dormindo) proxReacao = Math.max(proxReacao, agora + 1500);
-      if (o.ativo && !o.reacao && proxReacao && agora > proxReacao) {
+      if (mini.salto && agora - mini.salto.t0 > 7500) desinchar();
+    if (o.ativo && !o.reacao && !mini.salto && proxReacao && agora > proxReacao) {
         reagir(o, sortear(), fase === 'dentro' ? balaoMini : balao, agora);
         proxReacao = agora + (fase === 'dentro' ? 6500 + Math.random() * 4500 : 3800 + Math.random() * 2600);
       }
@@ -1055,17 +1159,23 @@ var GEO = {"w": 900, "h": 614, "iris": [454.84507400755734, 325.45030119846376, 
     var botaoMini = document.getElementById('mini'), toques = [], segurar = null, segurou = false;
     botaoMini.addEventListener('pointerdown', function () {
       segurou = false; clearTimeout(segurar);
-      segurar = setTimeout(function () { segurou = true; audio(); reagir(mini, 'hipnose', balaoMini, performance.now()); }, 650);
+      segurar = setTimeout(function () { if (mini.salto) return; segurou = true; audio(); reagir(mini, 'hipnose', balaoMini, performance.now()); }, 650);
     });
     ['pointerup', 'pointerleave', 'pointercancel'].forEach(function (ev) { botaoMini.addEventListener(ev, function () { clearTimeout(segurar); }); });
     botaoMini.addEventListener('click', function () {
       if (fase !== 'dentro' || segurou) return;
       audio();
+      if (mini.salto) { desinchar(); return; }
       var ag = performance.now();
       proxReacao = ag + 8000;
       if (mini.dormindo) { setTimeout(function () { reagir(mini, 'oxe', balaoMini, performance.now(), 'OXE! tava dormindo 😳'); }, 30); return; }
       toques.push(ag); toques = toques.filter(function (t) { return ag - t < 1700; });
-      if (toques.length >= 4) { toques = []; setTimeout(function () { reagir(mini, 'bravo', balaoMini, performance.now()); }, 30); return; }
+      if (toques.length >= 4) {
+        toques = [];
+        if (ag - ultimoBravo < 10000) { setTimeout(saltar, 30); return; }
+        ultimoBravo = ag;
+        setTimeout(function () { reagir(mini, 'bravo', balaoMini, performance.now()); }, 30); return;
+      }
       if (mini.reacao) return;
       setTimeout(function () { reagir(mini, Math.random() < .4 ? 'cutucou' : sortear(), balaoMini, performance.now()); }, 30);
     });
