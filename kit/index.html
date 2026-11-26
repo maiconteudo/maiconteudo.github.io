@@ -205,14 +205,14 @@ footer{padding:24px max(5vw,16px);color:#89a493;font-size:14px;border-top:1px so
       <div class="plano top">
         <span class="tag">Mais escolhido</span>
         <h3>Kit + Suporte</h3>
-        <div class="preco"><s>R$ 97</s><b>R$ 49</b></div>
+        <div class="preco"><s>R$ 97</s><b>R$ 49,90</b></div>
         <ul>
           <li>Tudo do Kit</li>
           <li>Grupo no WhatsApp comigo</li>
           <li>Ajuda pra montar seus primeiros vídeos</li>
           <li>Atualizações sempre, sem custo extra</li>
         </ul>
-        <a class="btn pulsa" data-plano="suporte" href="#planos">Comprar por R$ 49</a>
+        <a class="btn pulsa" data-plano="suporte" href="#planos">Comprar por R$ 49,90</a>
       </div>
     </div>
     <div class="garantia">
@@ -243,7 +243,7 @@ footer{padding:24px max(5vw,16px);color:#89a493;font-size:14px;border-top:1px so
 <script>
 {
   // Links de pagamento da Kiwify (cole aqui)
-  const LINKS={kit:"",suporte:"https://pay.kiwify.com.br/8xAJxj8"};
+  const LINKS={kit:"https://pay.kiwify.com.br/09YNHgy",suporte:"https://pay.kiwify.com.br/8xAJxj8"};
   for(const a of document.querySelectorAll("[data-plano]")){
     const u=LINKS[a.dataset.plano];
     if(u){a.href=u}else{a.classList.add("off");a.textContent="Vendas abrem em breve"}
