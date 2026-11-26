@@ -205,14 +205,14 @@ footer{padding:24px max(5vw,16px);color:#89a493;font-size:14px;border-top:1px so
       <div class="plano top">
         <span class="tag">Mais escolhido</span>
         <h3>Kit + Suporte</h3>
-        <div class="preco"><s>R$ 97</s><b>R$ 59</b></div>
+        <div class="preco"><s>R$ 97</s><b>R$ 49</b></div>
         <ul>
           <li>Tudo do Kit</li>
           <li>Grupo no WhatsApp comigo</li>
           <li>Ajuda pra montar seus primeiros vídeos</li>
           <li>Atualizações sempre, sem custo extra</li>
         </ul>
-        <a class="btn pulsa" data-plano="suporte" href="#planos">Comprar por R$ 59</a>
+        <a class="btn pulsa" data-plano="suporte" href="#planos">Comprar por R$ 49</a>
       </div>
     </div>
     <div class="garantia">
@@ -243,7 +243,7 @@ footer{padding:24px max(5vw,16px);color:#89a493;font-size:14px;border-top:1px so
 <script>
 {
   // Links de pagamento da Kiwify (cole aqui)
-  const LINKS={kit:"",suporte:""};
+  const LINKS={kit:"",suporte:"https://pay.kiwify.com.br/8xAJxj8"};
   for(const a of document.querySelectorAll("[data-plano]")){
     const u=LINKS[a.dataset.plano];
     if(u){a.href=u}else{a.classList.add("off");a.textContent="Vendas abrem em breve"}
@@ -253,11 +253,11 @@ footer{padding:24px max(5vw,16px);color:#89a493;font-size:14px;border-top:1px so
 
   // ---- partículas neon brancas ----
   const nc=document.getElementById("neon"),nx=nc.getContext("2d");let P=[];
-  const tam=()=>{nc.width=innerWidth*devicePixelRatio;nc.height=innerHeight*devicePixelRatio;P=Array.from({length:Math.min(80,Math.round(innerWidth/14))},()=>({x:Math.random()*nc.width,y:Math.random()*nc.height,r:(0.8+Math.random()*2)*devicePixelRatio,v:(0.15+Math.random()*0.5)*devicePixelRatio,o:Math.random()*6.28}))};
+  const tam=()=>{nc.width=innerWidth*devicePixelRatio;nc.height=innerHeight*devicePixelRatio;P=Array.from({length:Math.min(120,Math.round(innerWidth/9))},()=>({x:Math.random()*nc.width,y:Math.random()*nc.height,r:(1.4+Math.random()*2.6)*devicePixelRatio,v:(0.15+Math.random()*0.5)*devicePixelRatio,o:Math.random()*6.28}))};
   addEventListener("resize",tam);tam();
   const neon=t=>{nx.clearRect(0,0,nc.width,nc.height);
     for(const p of P){p.y+=p.v;p.x+=Math.sin(t/1600+p.o)*0.3*devicePixelRatio;if(p.y>nc.height+10){p.y=-10;p.x=Math.random()*nc.width}
-      const a=0.45+0.35*Math.sin(t/500+p.o);nx.beginPath();nx.arc(p.x,p.y,p.r,0,6.28);nx.fillStyle=`rgba(255,255,255,${a})`;nx.shadowColor="#fff";nx.shadowBlur=12*devicePixelRatio;nx.fill()}
+      const a=0.7+0.3*Math.sin(t/500+p.o);nx.beginPath();nx.arc(p.x,p.y,p.r,0,6.28);nx.fillStyle=`rgba(255,255,255,${a})`;nx.shadowColor="#fff";nx.shadowBlur=18*devicePixelRatio;nx.fill()}
     if(!reduz)requestAnimationFrame(neon)};
   requestAnimationFrame(neon);
 
